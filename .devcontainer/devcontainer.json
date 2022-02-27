@@ -1,0 +1,25 @@
+{
+    "name": "Python Django ENV",
+    "dockerFile": "Dockerfile",
+    "appPort": [8000],
+    "settings": {
+        "workbench.colorTheme": "Cobalt2"
+    },
+    "extensions": [
+		"esbenp.prettier-vscode",
+		"wesbos.theme-cobalt2",
+		"rvest.vs-code-prettier-eslint",
+        "ms-toolsai.jupyter-keymap",
+        "vscode-icons-team.vscode-icons",
+        "formulahendry.code-runner",
+        "oderwat.indent-rainbow",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.jupyter-renderers",
+        "christian-kohler.path-intellisense",
+        "ms-python.vscode-pylance",
+        "ms-python.python",
+        "KevinRose.vsc-python-indent",
+        "TabNine.tabnine-vscode",
+        "eamodio.gitlens"
+	]
+}
