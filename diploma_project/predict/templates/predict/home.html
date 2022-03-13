@@ -1,4 +1,8 @@
 {% extends "predict/base.html" %}
 {% block content %}
-    <h1> HI <h1/>
+<div class="Links">
+    <li><a class="navbar-brand mr-4" href="{% url 'predict-model1' %}"> model1 </a></li>
+    <li><a class="navbar-brand mr-4" href="{% url 'predict-model1' %}"> model2 </a></li>
+    <li><a class="navbar-brand mr-4" href="{% url 'predict-model1' %}"> model3 </a></li>
+</div>
 {% endblock content %}

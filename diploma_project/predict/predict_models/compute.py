@@ -2,17 +2,11 @@ from numpy import exp, cos, linspace
 import matplotlib.pyplot as plt
 import os, time, glob
 
-def damped_vibrations(t, A, b, w):
-    return A*exp(-b*t)*cos(w*t)
-
-def compute(A, b, w, T, resolution=500):
+def compute(x, y):
     """Return filename of plot of the damped_vibration function."""
     print(os.getcwd())
-    t = linspace(0, T, resolution+1)
-    y = damped_vibrations(t, A, b, w)
     plt.figure()  # needed to avoid adding curves in plot
-    plt.plot(t, y)
-    plt.title('A=%g, b=%g, w=%g' % (A, b, w))
+    plt.plot(x, y)
     if not os.path.isdir('static'):
         os.mkdir('static')
     else:

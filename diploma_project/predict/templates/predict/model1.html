@@ -1,10 +1,12 @@
 {% extends "predict/base.html" %}
 {% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'predict/model1.css' %}">
+
 <form method=post action="">{% csrf_token %}
     <table>
       {% for field in form %}
         <tr>
-        <td>{{ field.name }}</td>
         <td>{{ field }}</td>
         <td>{{ field.label }}</td>
         <td>{{ field.errors }}</td>
@@ -20,4 +22,15 @@
     <img src="{% get_static_prefix %}{{ result }}" width=500>
     {% endif %}
     </p>
+    <div id="model_name">
+      <body text="maroon">
+        <p>Модель Васичека</p>
+      </body>
+    </div>
+
+    <div id="formula">
+      </figure>
+        {% load static %} <img src="{% static "predict/media/formula_vas.png" %}" alt="home" />
+      </figure>
+    </div>
 {% endblock content %}

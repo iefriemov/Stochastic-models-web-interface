@@ -1,0 +1,4 @@
+1 Main page (home) is waky
+2 Django project on site view
+3 model1 to actual model
+4 добавть название модели в таблицу не справа

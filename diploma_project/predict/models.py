@@ -3,10 +3,10 @@ from math import pi
 
 class Input(models.Model):
     A = models.FloatField(
-        verbose_name=' amplitude (m)', default=1.0)
+        verbose_name=' начальная ставка', default=0.5)
     b = models.FloatField(
-        verbose_name=' damping coefficient (kg/s)', default=0.0)
+        verbose_name=' K', default=0.2)
     w = models.FloatField(
-        verbose_name=' frequency (1/s)', default=2*pi)
+        verbose_name=' θ', default=0.2)
     T = models.FloatField(
-        verbose_name=' time interval (s)', default=18)
+        verbose_name=' σ', default=0.2)
