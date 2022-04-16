@@ -1,0 +1,42 @@
+{% extends "predict/base.html" %}
+{% block content %}
+<form action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
+    {% csrf_token %}
+    <div class="form-group">
+    <label for="name" >File: </label>
+    <div>
+    <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
+    </div>                   
+    </div>
+    <div class="form-group">                   
+    <div>
+    <button> <span></span>Upload </button>
+    </div>
+    </div>
+</form>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<p>
+    {% if result != None %}
+    {% load static %}
+    <img src="{% get_static_prefix %}{{ result }}" width=500>
+    {% endif %}
+</p>
+
+
+<p>
+    {% if result != None %}
+    {% load static %}
+    My First Name is {{ result }}.
+    {% endif %}
+</p>
+
+
+{% endblock content %}

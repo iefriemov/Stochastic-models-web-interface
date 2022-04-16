@@ -5,6 +5,7 @@
 
 <form method=post action="">{% csrf_token %}
     <table>
+      <p>Модель Васичека</p>
       {% for field in form %}
         <tr>
         <td>{{ field }}</td>
@@ -14,23 +15,19 @@
         </tr>
       {% endfor %}
     </table>
-    <p><input type=submit value=Compute></form></p>
+<p><input type=submit value=Compute></form></p>
     
-    <p>
-    {% if result != None %}
-    {% load static %}
-    <img src="{% get_static_prefix %}{{ result }}" width=500>
-    {% endif %}
-    </p>
-    <div id="model_name">
-      <body text="maroon">
-        <p>Модель Васичека</p>
-      </body>
-    </div>
+<p>
+  {% if result != None %}
+  {% load static %}
+  <img src="{% get_static_prefix %}{{ result }}" width=500>
+  {% endif %}
+</p>
 
-    <div id="formula">
-      </figure>
-        {% load static %} <img src="{% static "predict/media/formula_vas.png" %}" alt="home" />
-      </figure>
-    </div>
+<div id="formula">
+  </figure>
+    {% load static %} <img src="{% static "predict/media/formula_vas.png" %}" alt="home" />
+  </figure>
+</div>
+
 {% endblock content %}

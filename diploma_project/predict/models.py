@@ -10,3 +10,4 @@ class Input(models.Model):
         verbose_name=' θ', default=0.2)
     T = models.FloatField(
         verbose_name=' σ', default=0.2)
+    
