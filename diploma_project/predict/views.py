@@ -3,8 +3,8 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .forms import InputForm
-from .predict_models.compute import compute, parameters
-from .predict_models.Vasicek import vasicek
+from .predict_models.compute import compute, estimate_parameters
+from .predict_models.stoch_models import vasicek, cir, rendleman_bartter
 import pandas as pd
 import os
 
@@ -12,7 +12,7 @@ import os
 def home(request):
     return render(request, 'predict/home.html')
 
-def index(request):
+def Vasicek_model(request):
     os.chdir(os.path.dirname(__file__))
     result = None
     if request.method == 'POST':
@@ -24,11 +24,45 @@ def index(request):
     else:
         form = InputForm()
 
-    return render(request, 'predict/model1.html',
+    return render(request, 'predict/Vasicek_model.html',
+            {'form': form,
+             'result': result,
+             })
+    
+def CIR_model(request):
+    os.chdir(os.path.dirname(__file__))
+    result = None
+    if request.method == 'POST':
+        form = InputForm(request.POST)
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            result = compute(*cir(form2.A, form2.b, form2.w, form2.T))
+            result = result.replace('static/', '')
+    else:
+        form = InputForm()
+
+    return render(request, 'predict/CIR_model.html',
             {'form': form,
              'result': result,
              })
 
+def Rendleman_Bartter_model(request):
+    os.chdir(os.path.dirname(__file__))
+    result = None
+    if request.method == 'POST':
+        form = InputForm(request.POST)
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            result = compute(*rendleman_bartter(form2.A, form2.b, form2.w, form2.T))
+            result = result.replace('static/', '')
+    else:
+        form = InputForm()
+
+    return render(request, 'predict/Rendleman_Bartter_model.html',
+            {'form': form,
+             'result': result,
+             })
+  
 def process_csv_file(request):
     if "GET" == request.method:
         return render(request, "predict/from_csv.html")
@@ -44,7 +78,7 @@ def process_csv_file(request):
             return HttpResponseRedirect(reverse("predict-csv"))
         
         df = pd.read_csv(csv_file)
-        result = compute(*vasicek(*parameters(df.iloc[:,0].to_numpy())))
+        result = compute(*vasicek(*estimate_parameters(df.iloc[:,0].to_numpy())))
         result = result.replace('static/', '')
         return render(request, 'predict/from_csv.html',
                 {
@@ -52,4 +86,6 @@ def process_csv_file(request):
                 })
     except Exception as e:
         messages.error(request,"Unable to upload CVS file. " + repr(e))
+        
+        
 

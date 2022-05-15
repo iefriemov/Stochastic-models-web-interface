@@ -1,8 +1,8 @@
 {% extends "predict/base.html" %}
 {% block content %}
 <div class="Links">
-    <li><a class="navbar-brand mr-4" href="{% url 'predict-model1' %}"> model1 </a></li>
-    <li><a class="navbar-brand mr-4" href="{% url 'predict-model1' %}"> model2 </a></li>
-    <li><a class="navbar-brand mr-4" href="{% url 'predict-model1' %}"> model3 </a></li>
+    <li><a class="navbar-brand mr-4" href="{% url 'predict-Vasicek_model' %}"> Модель Васичека </a></li>
+    <li><a class="navbar-brand mr-4" href="{% url 'predict-CIR_model' %}"> Модель Кокса-Ингерсолла-Росса </a></li>
+    <li><a class="navbar-brand mr-4" href="{% url 'predict-Rendleman_Bartter_model' %}"> Модель Рендлмана и Барттера </a></li>
 </div>
 {% endblock content %}
