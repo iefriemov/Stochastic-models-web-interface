@@ -8,6 +8,7 @@ urlpatterns = [
     path('CIR_model/', views.CIR_model, name = 'predict-CIR_model'),
     path('Rendleman_Bartter_model/', views.Rendleman_Bartter_model, name = 'predict-Rendleman_Bartter_model'),
     path('csv/', views.process_csv_file, name = 'predict-csv'),
+    path('stoch_model/', views.stoch_model, name = 'predict-stoch_model'),
     ]   
 
 urlpatterns += staticfiles_urlpatterns()

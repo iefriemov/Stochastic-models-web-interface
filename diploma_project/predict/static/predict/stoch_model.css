@@ -1,0 +1,13 @@
+#formula{
+    position: absolute;
+    top: 0%;
+    right: -70%;
+    size: 20%;
+    }
+
+#model_name{
+    position: absolute;
+    top: 5%;
+    right: 0%;
+    font-size: 150%;
+    }

@@ -1,8 +1,10 @@
+from lib2to3.pgen2.pgen import DFAState
+from this import d
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .forms import InputForm
+from .forms import InputForm, ModelForm
 from .predict_models.compute import compute, estimate_parameters
 from .predict_models.stoch_models import vasicek, cir, rendleman_bartter
 import pandas as pd
@@ -87,5 +89,31 @@ def process_csv_file(request):
     except Exception as e:
         messages.error(request,"Unable to upload CVS file. " + repr(e))
         
+        
+def stoch_model(request):
+    os.chdir(os.path.dirname(__file__))
+    result = None
+    if request.method == 'POST':
+        form = ModelForm(request.POST)
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            
+            #it's pity that there is not case switch in this python version
+            choose = form2.status
+            
+            if choose == 1:
+                result = compute(*vasicek(form2.A, form2.b, form2.w, form2.T))
+            elif choose == 2:
+                result = compute(*cir(form2.A, form2.b, form2.w, form2.T))
+            else:
+                result = compute(*rendleman_bartter(form2.A, form2.b, form2.w, form2.T))
+            result = result.replace('static/', '')
+    else:
+        form = ModelForm()
+
+    return render(request, 'predict/stoch_model.html',
+            {'form': form,
+             'result': result,
+             })
         
 
