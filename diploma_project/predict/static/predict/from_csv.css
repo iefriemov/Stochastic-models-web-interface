@@ -1,8 +1,9 @@
-#formula{
+#result{
     position: absolute;
-    top: 0%;
-    right: -70%;
-    size: 50%;
+    top: 20%;
+    right: -60%;
+    size: 200%;
+    font-size: 24px;
     }
 
 #model_name{
@@ -11,8 +12,3 @@
     right: 0%;
     font-size: 150%;
     }
-
-#form{
-    width: 300px;
-    height: 200px;
-}

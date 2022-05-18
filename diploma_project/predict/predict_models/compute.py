@@ -1,14 +1,22 @@
 from numpy import exp, cos, linspace
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.fft import fft
 from sklearn.linear_model import LinearRegression
 import os, time, glob
 
-def compute(x, y):
+def compute(x, y, exising_data=None):
     """Return filename of plot of the damped_vibration function."""
     print(os.getcwd())
-    plt.figure()  # needed to avoid adding curves in plot
-    plt.plot(x, y)
+    
+    if exising_data is not None:
+        N = len(exising_data)
+        plt.figure()  # needed to avoid adding curves in plot
+        plt.plot(np.arange(1, N+1), exising_data)
+        plt.plot(list(map(lambda x: x + N, x)), y)
+    else:
+        plt.figure()  # needed to avoid adding curves in plot
+        plt.plot(x, y)
     if not os.path.isdir('static'):
         os.mkdir('static')
     else:
@@ -20,6 +28,7 @@ def compute(x, y):
     plotfile = os.path.join('static', str(time.time()) + '.png')
     plt.savefig(plotfile)
     return plotfile
+
 
 def estimate_parameters(sigma_t):
     # define regression specification

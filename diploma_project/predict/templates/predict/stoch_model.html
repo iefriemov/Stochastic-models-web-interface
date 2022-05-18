@@ -1,9 +1,10 @@
 {% extends "predict/base.html" %}
+
 {% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'predict/stoch_model.css' %}">
 
-<form method=post action="">{% csrf_token %}
+<form method=post action="" id="form">{% csrf_token %}
     <table>
       <p>Краткосрочное моделирование</p>
       {% for field in form %}
@@ -26,7 +27,7 @@
 
 <div id="formula">
   </figure>
-    {% load static %} <img src="{% static "predict/media/stoch_formulas.png" %}" alt="home" />
+    {% load static %} <img src="{% static "predict/media/stoch_formulas.png" %}" width=700 alt="home" />
   </figure>
 </div>
 

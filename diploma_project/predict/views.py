@@ -14,6 +14,9 @@ import os
 def home(request):
     return render(request, 'predict/home.html')
 
+def models_predict(request):
+    return render(request, 'predict/models_predict.html')
+
 def Vasicek_model(request):
     os.chdir(os.path.dirname(__file__))
     result = None
@@ -80,11 +83,18 @@ def process_csv_file(request):
             return HttpResponseRedirect(reverse("predict-csv"))
         
         df = pd.read_csv(csv_file)
-        result = compute(*vasicek(*estimate_parameters(df.iloc[:,0].to_numpy())))
+        input_data = df.iloc[:,0].to_numpy()
+        
+        parameters = estimate_parameters(input_data)
+        result = compute(*vasicek(*parameters), input_data)
         result = result.replace('static/', '')
         return render(request, 'predict/from_csv.html',
                 {
                     'result': result,
+                    'r0' : parameters[0],
+                    'a' : parameters[1],
+                    'b' : parameters[2],
+                    'c' : parameters[3],
                 })
     except Exception as e:
         messages.error(request,"Unable to upload CVS file. " + repr(e))
@@ -115,5 +125,3 @@ def stoch_model(request):
             {'form': form,
              'result': result,
              })
-        
-

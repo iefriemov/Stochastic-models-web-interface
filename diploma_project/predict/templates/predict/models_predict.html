@@ -1,0 +1,7 @@
+{% extends "predict/base.html" %}
+{% block content %}
+<div class="Links">
+    <li><a class="navbar-brand mr-4" href="{% url 'predict-stoch_model' %}"> Модели краткосрочного моделирования </a></li>
+    <li><a class="navbar-brand mr-4" href="{% url 'predict-csv' %}"> Краткасрочное моделирование на основе данных </a></li>
+</div>
+{% endblock content %}

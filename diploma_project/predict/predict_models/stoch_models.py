@@ -1,7 +1,7 @@
 import numpy as np
 import math
 
-def vasicek(r0, K, theta, sigma, T=1., N=12):
+def vasicek(r0, K, theta, sigma, T=1., N=10):
     dt = T/float(N)
     rates = [r0]
     for i in range(N):

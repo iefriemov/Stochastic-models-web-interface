@@ -1,6 +1,6 @@
 import numpy as np 
 
-# Maximum Likelihood Estimation to calibrate parameters
+# Maximum Likelihood Estimation to calibrate parameters 
 def find_parameters(rates, dt=1/252):
   n = len(rates)
   Ax = sum(rates[0:(n-1)])

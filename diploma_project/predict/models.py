@@ -20,10 +20,10 @@ class Choose_Model(models.Model):
         (BORROWED, ('Модель Кокса-Ингерсолла-Росса')),
         (ARCHIVED, ('Модель Бреннана и Шварца')),
     )
-    # […]
     status = models.PositiveSmallIntegerField(
         choices=STATUS,
         default=AVAILABLE,
+        verbose_name=' Модель'
     )
     A = models.FloatField(
         verbose_name=' начальная ставка', default=0.5)

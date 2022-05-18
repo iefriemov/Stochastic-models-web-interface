@@ -12,3 +12,9 @@ class ModelForm(forms.ModelForm):
     class Meta:
         model = Choose_Model
         exclude = ("user", )
+        widgets = { 
+                    'A': forms.NumberInput(attrs={'style': 'width: 270px'}),
+                    'b': forms.NumberInput(attrs={'style': 'width: 270px'}),
+                    'w': forms.NumberInput(attrs={'style': 'width: 270px'}),
+                    'T': forms.NumberInput(attrs={'style': 'width: 270px'})
+                    }

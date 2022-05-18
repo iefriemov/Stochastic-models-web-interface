@@ -1,17 +1,20 @@
 {% extends "predict/base.html" %}
 {% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'predict/from_csv.css' %}">
+
 <form action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
     {% csrf_token %}
     <div class="form-group">
-    <label for="name" >File: </label>
-    <div>
-    <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
-    </div>                   
+        <label for="name" >File: </label>
+        <div>
+            <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
+        </div>                   
     </div>
     <div class="form-group">                   
-    <div>
-    <button> <span></span>Upload </button>
-    </div>
+        <div>
+            <button> <span></span>Upload </button>
+        </div>
     </div>
 </form>
 
@@ -25,18 +28,30 @@
 
 <p>
     {% if result != None %}
-    {% load static %}
+
     <img src="{% get_static_prefix %}{{ result }}" width=500>
     {% endif %}
 </p>
 
+<ul class="list-group" method=post action="">
+    {% for parametr in parametrs %}
+      <li class="list-group-item">
+        {{ parametr }}
+      </li>
+    {% endfor %}
+</ul>
 
-<p>
-    {% if result != None %}
-    {% load static %}
-    My First Name is {{ result }}.
-    {% endif %}
-</p>
+<div id="result">
+    <pre>
+        {% if result != None %}
+        {% load static %}
+        Начальная ставка: {{ r0 }}
+        Скорость возврата к среднему значению: {{ a }}
+        Долгосрочный уровень процентной ставки: {{ b }}
+        Волатильность: {{ c }}
+        {% endif %}
+    </pre>
+</div>
 
 
 {% endblock content %}
