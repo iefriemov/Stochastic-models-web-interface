@@ -7,6 +7,7 @@ from django.urls import reverse
 from .forms import InputForm, ModelForm
 from .predict_models.compute import compute, estimate_parameters
 from .predict_models.stoch_models import vasicek, cir, rendleman_bartter
+from .predict_models.use_one_of_models import selected_model
 import pandas as pd
 import os
 
@@ -82,11 +83,11 @@ def process_csv_file(request):
             messages.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
             return HttpResponseRedirect(reverse("predict-csv"))
         
+        choose = request.POST["my_options"] 
         df = pd.read_csv(csv_file)
         input_data = df.iloc[:,0].to_numpy()
-        
         parameters = estimate_parameters(input_data)
-        result = compute(*vasicek(*parameters), input_data)
+        result = selected_model(parameters, choose, input_data)
         result = result.replace('static/', '')
         return render(request, 'predict/from_csv.html',
                 {
@@ -108,15 +109,10 @@ def stoch_model(request):
         if form.is_valid():
             form2 = form.save(commit=False)
             
-            #it's pity that there is not case switch in this python version
             choose = form2.status
+            param = [form2.A, form2.b, form2.w, form2.T]
             
-            if choose == 1:
-                result = compute(*vasicek(form2.A, form2.b, form2.w, form2.T))
-            elif choose == 2:
-                result = compute(*cir(form2.A, form2.b, form2.w, form2.T))
-            else:
-                result = compute(*rendleman_bartter(form2.A, form2.b, form2.w, form2.T))
+            result = selected_model(param, choose)
             result = result.replace('static/', '')
     else:
         form = ModelForm()

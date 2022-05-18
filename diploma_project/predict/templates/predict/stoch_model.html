@@ -4,9 +4,8 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'predict/stoch_model.css' %}">
 
-<form method=post action="" id="form">{% csrf_token %}
-    <table>
-      <p>Краткосрочное моделирование</p>
+<form method=post action="" id="form" >{% csrf_token %}
+    <table width=450>
       {% for field in form %}
         <tr>
         <td>{{ field }}</td>
@@ -18,12 +17,15 @@
     </table>
 <p><input type=submit value=Compute></form></p>
     
-<p>
-  {% if result != None %}
-  {% load static %}
-  <img src="{% get_static_prefix %}{{ result }}" width=500>
-  {% endif %}
-</p>
+<div id="image">
+  </figure>
+    {% if result != None %}
+    {% load static %}
+    <img src="{% get_static_prefix %}{{ result }}" width=500>
+    {% endif %}
+  </figure>
+</div>
+
 
 <div id="formula">
   </figure>
