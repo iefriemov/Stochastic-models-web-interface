@@ -5,18 +5,20 @@ from scipy.fft import fft
 from sklearn.linear_model import LinearRegression
 import os, time, glob
 
-def compute(x, y, exising_data=None):
+def compute(data, exising_data=None):
     """Return filename of plot of the damped_vibration function."""
     print(os.getcwd())
     
     if exising_data is not None:
-        N = len(exising_data)
-        plt.figure()  # needed to avoid adding curves in plot
-        plt.plot(np.arange(1, N+1), exising_data)
-        plt.plot(list(map(lambda x: x + N, x)), y)
+        pass
     else:
+        d = [el[-1][-1] for el in data]
+        mean_end_price = round(np.mean(d),2)
         plt.figure()  # needed to avoid adding curves in plot
-        plt.plot(x, y)
+        for el in data:
+            x, y = el        
+            plt.plot(x, y)
+        plt.suptitle(f"среднее значение:{mean_end_price}", fontweight='bold')
     if not os.path.isdir('static'):
         os.mkdir('static')
     else:
