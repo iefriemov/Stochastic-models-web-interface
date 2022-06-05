@@ -17,15 +17,12 @@
     </table>
 <p><input type=submit value=Compute></form></p>
     
-<div id="image">
-  </figure>
-    {% if result != None %}
-    {% load static %}
-    <img src="{% get_static_prefix %}{{ result }}" width=500>
-    {% endif %}
-  </figure>
+<div> 
+  {% if result != None %}
+  {% load static %}
+  <img src="{% get_static_prefix %}{{ result }}" width=500>
+  {% endif %}
 </div>
-
 
 <div id="formula">
   </figure>

@@ -3,3 +3,4 @@ numpy==1.22.2
 matplotlib
 pandas
 scikit-learn
+Nasdaq-Data-Link

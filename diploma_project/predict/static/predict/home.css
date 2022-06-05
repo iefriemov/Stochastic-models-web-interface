@@ -1,23 +1,2 @@
 
 
-/* unvisited link */
-.Links a:link {
-    background: gold;
-    color: green;
-    color: red;
-  }
-  
-  /* visited link */
-.Links a::visited {
-    color: green;
-  }
-  
-  /* mouse over link */
-.Links a::hover {
-    color: hotpink;
-  }
-  
-  /* selected link */
-.Links a::active {
-    color: red;
-  }

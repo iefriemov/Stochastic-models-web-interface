@@ -5,13 +5,6 @@
     size: 50%;
     }
 
-#image{
-    position: absolute;
-    top: 0%;
-    right: 0%;
-    size: 100%;
-    }
-
 #model_name{
     position: absolute;
     top: 5%;
