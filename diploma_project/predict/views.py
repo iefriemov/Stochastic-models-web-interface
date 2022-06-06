@@ -10,6 +10,8 @@ from .predict_models.stoch_models import vasicek, cir, rendleman_bartter
 from .predict_models.use_one_of_models import selected_model
 import pandas as pd
 import os
+import configparser
+import psycopg2
 
 
 def home(request):
@@ -121,3 +123,23 @@ def stoch_model(request):
             {'form': form,
              'result': result,
              })
+    
+    
+def interests(request):
+    config = configparser.ConfigParser()
+    config.read('configurations_database.ini')
+    
+    conn = psycopg2.connect(
+                            dbname=config['PostgreSettings']['database'], 
+                            user=config['PostgreSettings']['user'], 
+                            password=config['PostgreSettings']['password'],
+                            host=config['PostgreSettings']['host']
+                            )
+    
+    cursor = conn.cursor()
+    #cursor.execute('SELECT * FROM airport LIMIT 10')
+    #records = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+    return render(request, 'predict/interests.html')
