@@ -1,8 +1,26 @@
-def monte_carlo(func, param):
-    resultsClosePrice = []
-    resultsMeanPrice = []
+import configparser
 
-    for index in range(0, 100):
-        closingPrices, mean_end_price = func(param)
-        resultsClosePrice.append(closingPrices)
-        resultsMeanPrice.append(mean_end_price)
+
+config_file = configparser.ConfigParser()
+
+# ADD SECTION
+config_file.add_section("PostgreSettings")
+# ADD SETTINGS TO SECTION
+config_file.set("PostgreSettings", "database", "airflow")
+config_file.set("PostgreSettings", "user", "airflow")
+config_file.set("PostgreSettings", "password", "airflow")
+config_file.set("PostgreSettings", "host", "5432")
+
+# SAVE CONFIG FILE
+with open(r"configurations_database.ini", 'w') as configfileObj:
+    config_file.write(configfileObj)
+    configfileObj.flush()
+    configfileObj.close()
+
+
+        
+        
+        
+        
+        
+
