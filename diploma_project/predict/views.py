@@ -10,6 +10,8 @@ from .predict_models.stoch_models import vasicek, cir, rendleman_bartter
 from .predict_models.use_one_of_models import selected_model
 import pandas as pd
 import os
+from .predict_models.connect_posetgres import get_interest
+import numpy as np
 import configparser
 import psycopg2
 
@@ -126,20 +128,28 @@ def stoch_model(request):
     
     
 def interests(request):
-    config = configparser.ConfigParser()
-    config.read('configurations_database.ini')
-    
-    conn = psycopg2.connect(
-                            dbname=config['PostgreSettings']['database'], 
-                            user=config['PostgreSettings']['user'], 
-                            password=config['PostgreSettings']['password'],
-                            host=config['PostgreSettings']['host']
-                            )
-    
-    cursor = conn.cursor()
-    #cursor.execute('SELECT * FROM airport LIMIT 10')
-    #records = cursor.fetchall()
-    
-    cursor.close()
-    conn.close()
-    return render(request, 'predict/interests.html')
+    if "GET" == request.method:
+        return render(request, "predict/interests.html")
+    # if not GET, then proceed with processing
+    try:
+        input_data = get_interest()
+        #data = data[data != None]
+        choose = request.POST["my_options"]
+        #input_data = np.asarray(data)
+        input_data = pd.DataFrame(input_data).dropna()
+        input_data = input_data.iloc[:,0].to_numpy()
+        print(input_data)
+        parameters = estimate_parameters(input_data)
+        print(parameters)
+        result = selected_model(parameters, choose, input_data)
+        result = result.replace('static/', '')
+        return render(request, 'predict/interests.html',
+                {
+                    'result': result,
+                    'r0' : parameters[0],
+                    'a' : parameters[1],
+                    'b' : parameters[2],
+                    'c' : parameters[3],
+                })
+    except Exception as e:
+        messages.error(request,"Unable to upload CVS file. " + repr(e))

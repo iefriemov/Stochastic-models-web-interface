@@ -1,18 +1,57 @@
 {% extends "predict/base.html" %}
 {% block content %}
-<body>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'predict/from_csv.css' %}">
 
-<article>
-    <header>
-    <h1>Стохастическое моделирование</h1>
-    </header>
-    <p style="text-indent: 40px" align="justify">
-        HELLLO
-    </p>
-    <p style="text-indent: 40px">
-        Этот проект позволяет использовать вам стохастические модели в нашей работе без особых результатов.
-    </p>
-</article>
 
-</body>
+
+<form action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
+    {% csrf_token %}
+    <fieldset id="personalInfo">
+        <legend>Choose csv file and model:</legend>
+        <select name="my_options"> 
+            <option value = "1" >Модель Васичека</option>
+            <option value = "2" >Модель Кокса-Ингерсолла-Росса</option>
+            <option value = "3" >Модель Бреннана и Шварца</option>
+        </select>
+        <input type="submit" name="button" id="button" value="submit" />
+    </fieldset>
+</form>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<p>
+    {% if result != None %}
+
+    <img src="{% get_static_prefix %}{{ result }}" width=500>
+    {% endif %}
+</p>
+
+<ul class="list-group" method=post action="">
+    {% for parametr in parametrs %}
+      <li class="list-group-item">
+        {{ parametr }}
+      </li>
+    {% endfor %}
+</ul>
+
+<div id="result">
+    <pre>
+        {% if result != None %}
+        {% load static %}
+        Начальная ставка: {{ r0 }}
+        Скорость возврата к среднему значению: {{ a }}
+        Долгосрочный уровень процентной ставки: {{ b }}
+        Волатильность: {{ c }}
+        {% endif %}
+    </pre>
+</div>
+
+
 {% endblock content %}
