@@ -6,7 +6,6 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .forms import InputForm, ModelForm
 from .predict_models.compute import compute, estimate_parameters
-from .predict_models.stoch_models import vasicek, cir, rendleman_bartter
 from .predict_models.use_one_of_models import selected_model
 import pandas as pd
 import os
@@ -22,57 +21,6 @@ def home(request):
 def models_predict(request):
     return render(request, 'predict/models_predict.html')
 
-def Vasicek_model(request):
-    os.chdir(os.path.dirname(__file__))
-    result = None
-    if request.method == 'POST':
-        form = InputForm(request.POST)
-        if form.is_valid():
-            form2 = form.save(commit=False)
-            result = compute(*vasicek(form2.A, form2.b, form2.w, form2.T))
-            result = result.replace('static/', '')
-    else:
-        form = InputForm()
-
-    return render(request, 'predict/Vasicek_model.html',
-            {'form': form,
-             'result': result,
-             })
-    
-def CIR_model(request):
-    os.chdir(os.path.dirname(__file__))
-    result = None
-    if request.method == 'POST':
-        form = InputForm(request.POST)
-        if form.is_valid():
-            form2 = form.save(commit=False)
-            result = compute(*cir(form2.A, form2.b, form2.w, form2.T))
-            result = result.replace('static/', '')
-    else:
-        form = InputForm()
-
-    return render(request, 'predict/CIR_model.html',
-            {'form': form,
-             'result': result,
-             })
-
-def Rendleman_Bartter_model(request):
-    os.chdir(os.path.dirname(__file__))
-    result = None
-    if request.method == 'POST':
-        form = InputForm(request.POST)
-        if form.is_valid():
-            form2 = form.save(commit=False)
-            result = compute(*rendleman_bartter(form2.A, form2.b, form2.w, form2.T))
-            result = result.replace('static/', '')
-    else:
-        form = InputForm()
-
-    return render(request, 'predict/Rendleman_Bartter_model.html',
-            {'form': form,
-             'result': result,
-             })
-  
 def process_csv_file(request):
     if "GET" == request.method:
         return render(request, "predict/from_csv.html")
@@ -116,7 +64,7 @@ def stoch_model(request):
             choose = form2.status
             param = [form2.A, form2.b, form2.w, form2.T]
             
-            result = selected_model(param, choose)
+            result = selected_model(param, int(choose))
             result = result.replace('static/', '')
     else:
         form = ModelForm()
@@ -138,10 +86,12 @@ def interests(request):
         #input_data = np.asarray(data)
         input_data = pd.DataFrame(input_data).dropna()
         input_data = input_data.iloc[:,0].to_numpy()
-        print(input_data)
+        #print(input_data)
         parameters = estimate_parameters(input_data)
-        print(parameters)
-        result = selected_model(parameters, choose, input_data)
+        #print(parameters)
+        #print(parameters, choose, input_data)
+        result = selected_model(parameters, int(choose), input_data)
+        print(result)
         result = result.replace('static/', '')
         return render(request, 'predict/interests.html',
                 {

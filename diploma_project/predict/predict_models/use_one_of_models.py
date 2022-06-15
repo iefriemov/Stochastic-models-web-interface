@@ -1,13 +1,13 @@
 from .compute import compute, estimate_parameters
-from .stoch_models import vasicek, cir, rendleman_bartter           
+from .stoch_models import general_model, vasicek, cir , rendleman_bartter
 
 #it's pity that there is not case switch in this python version 
 def selected_model(param, choose, exising_data = None):
+    choose = int(choose)
     if choose == 1:
-        result = compute(vasicek(*param), exising_data)
+        print('in 1')
+        return compute(general_model(*param, model=vasicek), exising_data)
     elif choose == 2:
-        result = compute(cir(*param), exising_data)
-    else:
-        result = compute(rendleman_bartter(*param), exising_data)
-        
-    return result
+        return compute(general_model(*param, model=cir), exising_data)
+    elif choose == 3:
+        return compute(general_model(*param, model=rendleman_bartter), exising_data)

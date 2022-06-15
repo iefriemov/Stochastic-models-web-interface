@@ -8,27 +8,24 @@ import os, time, glob
 def compute(data, exising_data=None):
     """Return filename of plot of the damped_vibration function."""
     print(os.getcwd())
-    print(exising_data)
-    plt.figure()  # needed to avoid adding curves in plot
-    if exising_data is not None:
-        
-        N = len(exising_data) // 2
-        plt.plot(np.arange(1, N+1), exising_data[N+1:]) 
-        d = [el[-1][-1] for el in data]
-        mean_end_price = round(np.mean(d),2)
-        for el in data:
-            x, y = el        
-            plt.plot(list(map(lambda x: x + N, x)), y)
-        plt.suptitle(f"среднее значение:{mean_end_price}", fontweight='bold')       
-        
+    plt.figure()  
 
-    else:  
-        d = [el[-1][-1] for el in data]
-        mean_end_price = round(np.mean(d),2)
-        for el in data:
-            x, y = el        
-            plt.plot(x, y)
-        plt.suptitle(f"среднее значение:{mean_end_price}", fontweight='bold')
+    x, y = data
+    y = np.mean(y, axis=0)
+    print(x, y)
+    mean_end_price = round(y[-1],2)
+    
+    if exising_data is not None:
+        N = len(exising_data) 
+        y[0] = exising_data[-1]
+        N -=1
+        plt.plot(np.arange(len(exising_data)), exising_data) 
+        
+    else:
+        N = 0
+
+    plt.plot(list(map(lambda x: x + N, x)), y) 
+    plt.suptitle(f"среднее значение:{mean_end_price}", fontweight='bold')
         
         
     if not os.path.isdir('static'):
