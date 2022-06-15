@@ -1,7 +1,5 @@
-from numpy import exp, cos, linspace
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.fft import fft
 from sklearn.linear_model import LinearRegression
 import os, time, glob
 
@@ -12,7 +10,6 @@ def compute(data, exising_data=None):
 
     x, y = data
     y = np.mean(y, axis=0)
-    print(x, y)
     mean_end_price = round(y[-1],2)
     
     if exising_data is not None:

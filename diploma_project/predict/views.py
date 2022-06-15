@@ -1,18 +1,13 @@
-from lib2to3.pgen2.pgen import DFAState
-from this import d
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .forms import InputForm, ModelForm
-from .predict_models.compute import compute, estimate_parameters
+from .forms import ModelForm
+from .predict_models.compute import estimate_parameters
 from .predict_models.use_one_of_models import selected_model
 import pandas as pd
 import os
 from .predict_models.connect_posetgres import get_interest
-import numpy as np
-import configparser
-import psycopg2
 
 
 def home(request):
@@ -71,8 +66,8 @@ def stoch_model(request):
 
     return render(request, 'predict/stoch_model.html',
             {'form': form,
-             'result': result,
-             })
+            'result': result,
+            })
     
     
 def interests(request):

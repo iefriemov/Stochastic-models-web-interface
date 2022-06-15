@@ -7,8 +7,8 @@ def vasicek(K, theta, rates, sigma, dt):
 def cir(K, theta, rates, sigma, dt):
     return K*(theta-rates)*dt + sigma*math.sqrt(rates)*np.random.normal()
 
-def rendleman_bartter(K, theta, rates, sigma, dt): # The Brennan and Schwartz model
-    return K*(theta-rates)*dt + sigma*rates*np.random.normal() # K*(theta-rates[-1])*dt + sigma*rates[-1]*np.random.normal()
+def rendleman_bartter(K, theta, rates, sigma, dt):
+    return K*(theta-rates)*dt + sigma*rates*np.random.normal() 
     
 def general_model(r0, K, theta, sigma, model, T=1., N=10, to_display=[], iter=50, for_mean=[]):
     print("general_model")
